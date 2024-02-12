@@ -53,4 +53,4 @@ RUN \
     /tmp/*
 
 # copy local files
-COPY root/ /
+COPY --chmod=755 root/ /
