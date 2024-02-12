@@ -9,8 +9,6 @@ ARG AC2MQTT_VERSION
 LABEL build_version="Version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="emosenkis"
 
-ENV PIP_BREAK_SYSTEM_PACKAGES=1
-
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -29,7 +27,7 @@ RUN \
         py3-yaml \
         && \
  echo "**** install pip packages ****" && \
- pip3 install pycrypto && \
+ pip3 install pycrypto --break-system-packages && \
  echo "**** Install app ****" && \
  mkdir -p /app/ac2mqtt && \
  echo "Created App folder in /app/ac2mqtt" && \
