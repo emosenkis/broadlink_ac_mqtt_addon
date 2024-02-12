@@ -8,6 +8,5 @@
   "map": ["config"],
   "services": ["mqtt:need"],
   "host_network": true,
-  "init": false,
-  "host_pid": true
+  "init": false
 }
