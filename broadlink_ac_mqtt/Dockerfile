@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/armhf:15.0.6
+ARG BUILD_FROM=ghcr.io/hassio-addons/base-python/armhf:15.0.6
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -9,8 +9,8 @@ ARG AC2MQTT_VERSION
 LABEL build_version="Version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="emosenkis"
 
-# set python to use utf-8 rather than ascii
-ENV PYTHONIOENCODING="UTF-8"
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN \
  echo "**** install packages ****" && \
@@ -27,7 +27,7 @@ RUN \
         py3-yaml \
         && \
  echo "**** install pip packages ****" && \
- pip install --no-cache-dir -U pycrypto && \
+ pip3 install pycrypto && \
  echo "**** Install app ****" && \
  mkdir -p /app/ac2mqtt && \
  echo "Created App folder in /app/ac2mqtt" && \
@@ -47,8 +47,7 @@ RUN \
  echo "None" > /app/ac2mqtt/version.txt && \
  echo ${AC2MQTT_RELEASE} > /app/ac2mqtt/version.txt && \
  echo "**** cleanup ****" && \
- apk del --purge \
-    build-dependencies && \
+ apk del --no-cache --purge build-dependencies && \
  rm -rf \
     /root/.cache \
     /tmp/*
