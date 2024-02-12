@@ -26,26 +26,26 @@ RUN \
         py3-paho-mqtt \
         py3-yaml \
         && \
- echo "**** install pip packages ****" && \
- pip3 install pycrypto --break-system-packages && \
  echo "**** Install app ****" && \
  mkdir -p /app/ac2mqtt && \
  echo "Created App folder in /app/ac2mqtt" && \
- AC2MQTT_RELEASE=$(curl -sX GET "https://api.github.com/repos/liaan/broadlink_ac_mqtt/releases/latest" \
- | jq -r '. | .tag_name'); \
- echo "Latest Release is ${AC2MQTT_RELEASE}" && \
- echo "Downloading Version ${AC2MQTT_RELEASE}" && \
+ AC2MQTT_COMMIT=$(curl -sX GET "https://api.github.com/repos/liaan/broadlink_ac_mqtt/branches/master" \
+ | jq -r '.commit.sha'); \
+ echo "Latest commit is ${AC2MQTT_COMMIT}" && \
+ echo "Downloading commit ${AC2MQTT_COMMIT}" && \
  curl -o \
  /tmp/ac2mqtt.tar.gz -L \
-    "https://github.com/liaan/broadlink_ac_mqtt/archive/${AC2MQTT_RELEASE}.tar.gz" && \
+    "https://github.com/liaan/broadlink_ac_mqtt/archive/${AC2MQTT_COMMIT}.tar.gz" && \
  echo "Downloaded successfully, extracting to /app/ac2mqtt" && \
  tar xf \
  /tmp/ac2mqtt.tar.gz -C \
     /app/ac2mqtt --strip-components=1 && \
  echo "Extracted successfully" && \
+ echo "**** install pip packages ****" && \
+ pip3 install -r /app/ac2mqtt/requirements.txt --break-system-packages && \
  echo "**** Hard Coding versioning ****" && \
  echo "None" > /app/ac2mqtt/version.txt && \
- echo ${AC2MQTT_RELEASE} > /app/ac2mqtt/version.txt && \
+ echo ${AC2MQTT_COMMIT} > /app/ac2mqtt/version.txt && \
  echo "**** cleanup ****" && \
  apk del --no-cache --purge build-dependencies && \
  rm -rf \
