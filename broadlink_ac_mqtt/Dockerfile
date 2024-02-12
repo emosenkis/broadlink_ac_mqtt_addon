@@ -53,4 +53,8 @@ RUN \
     /tmp/*
 
 # copy local files
-COPY --chmod=755 root/ /
+COPY root/ /
+
+RUN \
+ echo "**** make run script executable ****" && \
+ chmod +x /etc/services.d/ac2mqtt/run
