@@ -9,6 +9,8 @@ ARG AC2MQTT_VERSION
 LABEL build_version="Version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="emosenkis"
 
+ENV PIP_BREAK_SYSTEM_PACKAGES=1
+
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
