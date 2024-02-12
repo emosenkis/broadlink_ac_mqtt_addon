@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/armhf:10.0.0
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/armhf:15.0.6
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -17,17 +17,15 @@ RUN \
  apk add --no-cache --virtual=build-dependencies \
     g++ \
     gcc \
-    curl \
     make \
     python3-dev \
-    curl \
+    py3-pip \
     && \
  apk add --no-cache \
         python3 \
         py3-paho-mqtt \
         py3-yaml \
-        py3-pip \
-        jq && \
+        && \
  echo "**** install pip packages ****" && \
  pip install --no-cache-dir -U pycrypto && \
  echo "**** Install app ****" && \
@@ -44,7 +42,7 @@ RUN \
  tar xf \
  /tmp/ac2mqtt.tar.gz -C \
     /app/ac2mqtt --strip-components=1 && \
- echo "Extrcted successfully" && \
+ echo "Extracted successfully" && \
  echo "**** Hard Coding versioning ****" && \
  echo "None" > /app/ac2mqtt/version.txt && \
  echo ${AC2MQTT_RELEASE} > /app/ac2mqtt/version.txt && \
