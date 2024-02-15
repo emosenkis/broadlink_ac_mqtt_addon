@@ -2,8 +2,8 @@
 
 exec \
   python3 /app/ac2mqtt/monitor.py \
-  -ms "$(bashio::services mqtt host)" \
-  -mp "$(bashio::services mqtt port)" \
-  -mU "$(bashio::services mqtt username)" \
-  -mP "$(bashio::services mqtt password)" \
+  -ms "$(bashio::services mqtt host && true)" \
+  -mp "$(bashio::services mqtt port && true)" \
+  -mU "$(bashio::services mqtt username && true)" \
+  -mP "$(bashio::services mqtt password && true)" \
   -c /config/broadlink_ac_mqtt.yaml
